@@ -1,6 +1,9 @@
 /* eslint-disable camelcase */
 
 import { identity } from 'is-this-a-pigeon';
+import { fluent, FluentIterable } from '@codibre/fluent-iterable';
+import { Client } from '@elastic/elasticsearch';
+import { Search } from '@elastic/elasticsearch/api/requestParams';
 
 export type FilterList = (object | undefined)[];
 export type OrderType = 'asc' | 'desc';
@@ -321,4 +324,25 @@ export function where<Query extends object | undefined>(
 				query,
 		  }
 		: {};
+}
+
+/**
+ * Runs a top query hits and treat the result in a fancy way where you receive an iterable in steroids of the type you inform
+ * @param client Elasticsearch client
+ * @param params the search to be ran
+ * @param topHitsAggregationName the name of the top aggregation
+ * @returns The FluentIterable of T (please inform T when using this function for best experience)
+ */
+export async function runTopHitsQuery<T>(
+	client: Client,
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	params: Search<any>,
+	topHitsAggregationName: string,
+): Promise<FluentIterable<T>> {
+	const response = await client.search(params);
+	return fluent(response.body?.aggregations?.[topHitsAggregationName]?.buckets)
+		.filter()
+		.flatten()
+		.flatMap((x) => (x as RawTopResult<T>).tops.hits.hits)
+		.map('_source');
 }
