@@ -1,6 +1,6 @@
-fluent-iterable - v0.1.1
+fluent-iterable - v0.2.0
 
-# fluent-iterable - v0.1.1
+# fluent-iterable - v0.2.0
 
 ## Table of contents
 
@@ -29,6 +29,7 @@ fluent-iterable - v0.1.1
 - [min](README.md#min)
 - [or](README.md#or)
 - [orderBy](README.md#orderby)
+- [runTopHitsQuery](README.md#runtophitsquery)
 - [select](README.md#select)
 - [topHit](README.md#tophit)
 - [where](README.md#where)
@@ -405,6 +406,32 @@ Format a ordering object
 **Returns:** { [t in string]: OrderType}[]
 
 the ordering object
+
+___
+
+### runTopHitsQuery
+
+▸ **runTopHitsQuery**<T\>(`client`: Client, `params`: *Search*<any\>, `topHitsAggregationName`: *string*): *Promise*<FluentIterable<T\>\>
+
+Runs a top query hits and treat the result in a fancy way where you receive an iterable in steroids of the type you inform
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `client` | Client | Elasticsearch client |
+| `params` | *Search*<any\> | the search to be ran |
+| `topHitsAggregationName` | *string* | the name of the top aggregation |
+
+**Returns:** *Promise*<FluentIterable<T\>\>
+
+The FluentIterable of T (please inform T when using this function for best experience)
 
 ___
 

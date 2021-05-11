@@ -1,5 +1,8 @@
 
-## 0.1.1
+## 0.2.0
+* d27ebbf adding runTopHitsQuery
+## v0.1.1
+* 1d410d9 0.1.1
 * 65df3a4 adding interface for top result
 * 612adbe adding prepublishOnly
 * 1e58238 fixing lib name
