@@ -1,8 +1,7 @@
 {
-  "name": "boilerplate-base",
-  "description": "This project is just a template for creation of new projects",
+  "name": "elastic-search-query-helper",
+  "description": "Simple functions to mount queries for elasticsearch 7+",
   "version": "0.0.0",
-  "private": true,
   "author": {
     "name": "Thiago O Santos <tos.oliveira@gmail.com>"
   },
@@ -55,18 +54,20 @@
       "./src/**/*.ts"
     ],
     "testEnvironment": "node",
-    "setupFilesAfterEnv": ["./test/jest-setup.ts"]
+    "setupFilesAfterEnv": [
+      "./test/jest-setup.ts"
+    ]
   },
   "directories": {
     "test": "test"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/codibre/boilerplate-base.git"
+    "url": "https://github.com/codibre/elastic-search-query-helper.git"
   },
-  "homepage": "https://github.com/codibre/boilerplate-base#readme",
+  "homepage": "https://github.com/codibre/elastic-search-query-helper#readme",
   "bugs": {
-    "url": "https://github.com/codibre/boilerplate-base/issues"
+    "url": "https://github.com/codibre/elastic-search-query-helper/issues"
   },
   "keywords": [],
   "license": "MIT",
@@ -97,5 +98,8 @@
     "typedoc": "^0.20.34",
     "typedoc-plugin-markdown": "^3.6.0",
     "typescript": "^4.2.3"
+  },
+  "dependencies": {
+    "is-this-a-pigeon": "^0.4.1"
   }
 }
