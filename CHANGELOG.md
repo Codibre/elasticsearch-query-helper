@@ -1,5 +1,8 @@
 
-## 0.2.0
+## 0.2.1
+* f3ea4a9 fixing flattening run top hits query
+## v0.2.0
+* cc6a45d 0.2.0
 * d27ebbf adding runTopHitsQuery
 ## v0.1.1
 * 1d410d9 0.1.1
