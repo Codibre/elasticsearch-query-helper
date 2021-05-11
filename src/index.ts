@@ -6,6 +6,16 @@ export type FilterList = (object | undefined)[];
 export type OrderType = 'asc' | 'desc';
 export type OrderField = [string, OrderType];
 
+export interface RawTopResult<T> {
+	tops: {
+		hits: {
+			hits: {
+				_source: T;
+			}[];
+		};
+	};
+}
+
 function andOr<T extends FilterList>(items: T, field: 'should' | 'must') {
 	const values = items.filter(identity);
 	switch (values.length) {
