@@ -342,7 +342,6 @@ export async function runTopHitsQuery<T>(
 	const response = await client.search(params);
 	return fluent(response.body?.aggregations?.[topHitsAggregationName]?.buckets)
 		.filter()
-		.flatten()
 		.flatMap((x) => (x as RawTopResult<T>).tops.hits.hits)
 		.map('_source');
 }
