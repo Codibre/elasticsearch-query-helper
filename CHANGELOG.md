@@ -1,5 +1,8 @@
 
-## 0.2.1
+## 0.2.2
+* 1e4eeb3 adding lt filter
+## v0.2.1
+* dc8b098 0.2.1
 * f3ea4a9 fixing flattening run top hits query
 ## v0.2.0
 * cc6a45d 0.2.0

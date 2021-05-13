@@ -1,6 +1,6 @@
-fluent-iterable - v0.2.1
+fluent-iterable - v0.2.2
 
-# fluent-iterable - v0.2.1
+# fluent-iterable - v0.2.2
 
 ## Table of contents
 
@@ -25,6 +25,7 @@ fluent-iterable - v0.2.1
 - [gte](README.md#gte)
 - [isIn](README.md#isin)
 - [lastHit](README.md#lasthit)
+- [lt](README.md#lt)
 - [lte](README.md#lte)
 - [min](README.md#min)
 - [or](README.md#or)
@@ -306,6 +307,32 @@ Returns a tpp hit aggregate expression of size 1
 | `tops.top_hits.sort` | Order |
 
 the top hit aggregate object of size 1
+
+___
+
+### lt
+
+▸ **lt**<T, V\>(`field`: T, `value`: V \| *undefined*): *undefined* \| { `range`: {}  }
+
+Returns a range filter with lt
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | *string* |
+| `V` | - |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `field` | T | The field to be compared |
+| `value` | V \| *undefined* | the upper value |
+
+**Returns:** *undefined* \| { `range`: {}  }
+
+The lt filter
 
 ___
 
