@@ -90,6 +90,24 @@ export function lte<T extends string, V>(field: T, value: V | undefined) {
 }
 
 /**
+ * Returns a range filter with lt
+ * @param field The field to be compared
+ * @param value the upper value
+ * @returns The lt filter
+ */
+export function lt<T extends string, V>(field: T, value: V | undefined) {
+	return value
+		? {
+				range: {
+					[field]: {
+						lt: value,
+					},
+				},
+		  }
+		: undefined;
+}
+
+/**
  * Returns a range filter with gte and lte
  * @param field The field to be compared
  * @param from the lower value
