@@ -139,10 +139,14 @@ export function between<T extends string, V>(
  * @returns The in filter
  */
 export function isIn<T extends string, V>(field: T, values: V[] | undefined) {
-	return values?.length
+	if (!values) {
+		return undefined;
+	}
+	const definedValues = values.filter((x) => x !== undefined);
+	return definedValues.length
 		? {
 				terms: {
-					[field]: values,
+					[field]: definedValues,
 				},
 		  }
 		: undefined;
