@@ -1,5 +1,8 @@
 
-## 0.2.2
+## 0.2.3
+* 5da886f bettering isIn
+## v0.2.2
+* 7327f6c 0.2.2
 * 1e4eeb3 adding lt filter
 ## v0.2.1
 * dc8b098 0.2.1
