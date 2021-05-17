@@ -1,5 +1,8 @@
 
-## 0.2.3
+## 0.3.0
+* 77075b9 adding option to have from and size in topHits
+## v0.2.3
+* 95742f4 0.2.3
 * 5da886f bettering isIn
 ## v0.2.2
 * 7327f6c 0.2.2

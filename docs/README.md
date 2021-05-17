@@ -1,6 +1,6 @@
-fluent-iterable - v0.2.3
+fluent-iterable - v0.3.0
 
-# fluent-iterable - v0.2.3
+# fluent-iterable - v0.3.0
 
 ## Table of contents
 
@@ -32,7 +32,7 @@ fluent-iterable - v0.2.3
 - [orderBy](README.md#orderby)
 - [runTopHitsQuery](README.md#runtophitsquery)
 - [select](README.md#select)
-- [topHit](README.md#tophit)
+- [topHits](README.md#tophits)
 - [where](README.md#where)
 
 ## Type aliases
@@ -301,10 +301,7 @@ Returns a tpp hit aggregate expression of size 1
 | Name | Type |
 | :------ | :------ |
 | `tops` | *object* |
-| `tops.top_hits` | *object* |
-| `tops.top_hits._source` | *undefined* \| { `includes`: Fields  } |
-| `tops.top_hits.size` | *number* |
-| `tops.top_hits.sort` | Order |
+| `tops.top_hits` | { `_source`: *undefined* \| { `includes`: Fields  } ; `size`: *number* ; `sort`: Order  } \| { `_source`: *undefined* \| { `includes`: Fields  } ; `from`: *number* ; `size`: *number* ; `sort`: Order  } |
 
 the top hit aggregate object of size 1
 
@@ -486,9 +483,9 @@ The enveloped object
 
 ___
 
-### topHit
+### topHits
 
-▸ **topHit**<T, Order, Fields\>(`size`: *number*, `sort`: Order, `fields?`: Fields): *object*
+▸ **topHits**<T, Order, Fields\>(`size`: *number* \| [*number*, *number*], `sort`: Order, `fields?`: Fields): *object*
 
 Returns a tpp hit aggregate expression
 
@@ -504,7 +501,7 @@ Returns a tpp hit aggregate expression
 
 | Name | Type | Description |
 | :------ | :------ | :------ |
-| `size` | *number* | the number of items to be returned |
+| `size` | *number* \| [*number*, *number*] | the number of items to be returned, if it is a tuple of two numbers, the first one is the number of items to skip, and the second, de size |
 | `sort` | Order | The order to be applied. Must be a return of *orderBy* function |
 | `fields?` | Fields | the fields to be returned. If not informed, all fields are returned |
 
@@ -513,10 +510,7 @@ Returns a tpp hit aggregate expression
 | Name | Type |
 | :------ | :------ |
 | `tops` | *object* |
-| `tops.top_hits` | *object* |
-| `tops.top_hits._source` | *undefined* \| { `includes`: Fields  } |
-| `tops.top_hits.size` | *number* |
-| `tops.top_hits.sort` | Order |
+| `tops.top_hits` | { `_source`: *undefined* \| { `includes`: Fields  } ; `size`: *number* ; `sort`: Order  } \| { `_source`: *undefined* \| { `includes`: Fields  } ; `from`: *number* ; `size`: *number* ; `sort`: Order  } |
 
 the top hit aggregate object
 
