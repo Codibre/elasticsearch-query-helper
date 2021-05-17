@@ -196,22 +196,24 @@ export function orderBy<
 
 /**
  * Returns a tpp hit aggregate expression
- * @param size the number of items to be returned
+ * @param size the number of items to be returned, if it is a tuple of two numbers, the first one is the number of items to skip, and the second, de size
  * @param sort The order to be applied. Must be a return of *orderBy* function
  * @param fields the fields to be returned. If not informed, all fields are returned
  * @returns the top hit aggregate object
  */
-export function topHit<
+export function topHits<
 	T extends string,
 	Order extends {
 		[field in T]: OrderType;
 	}[],
 	Fields extends string[],
->(size: number, sort: Order, fields?: Fields) {
+>(size: number | [number, number], sort: Order, fields?: Fields) {
 	return {
 		tops: {
 			top_hits: {
-				size,
+				...(typeof size === 'number'
+					? { size }
+					: { from: size[0], size: size[1] }),
 				sort,
 				_source: select(fields),
 			},
@@ -232,7 +234,7 @@ export function lastHit<
 	}[],
 	Fields extends string[],
 >(sort: Order, fields?: Fields) {
-	return topHit(1, sort, fields);
+	return topHits(1, sort, fields);
 }
 
 /**
