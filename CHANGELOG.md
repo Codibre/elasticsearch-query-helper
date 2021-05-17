@@ -1,5 +1,8 @@
 
-## 0.3.0
+## 0.4.0
+* f82e95d bettering response parsers
+## v0.3.0
+* 7e79a26 0.3.0
 * 77075b9 adding option to have from and size in topHits
 ## v0.2.3
 * 95742f4 0.2.3

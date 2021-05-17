@@ -1,6 +1,6 @@
-fluent-iterable - v0.3.0
+fluent-iterable - v0.4.0
 
-# fluent-iterable - v0.3.0
+# fluent-iterable - v0.4.0
 
 ## Table of contents
 
@@ -21,6 +21,8 @@ fluent-iterable - v0.3.0
 - [by](README.md#by)
 - [byExpr](README.md#byexpr)
 - [equals](README.md#equals)
+- [flatTermsAggregations](README.md#flattermsaggregations)
+- [flatTopHitsAggregation](README.md#flattophitsaggregation)
 - [group](README.md#group)
 - [gte](README.md#gte)
 - [isIn](README.md#isin)
@@ -191,6 +193,57 @@ Returns a filter of equals comparison
 **Returns:** *undefined* \| { `terms`: {}  }
 
 The equality filter
+
+___
+
+### flatTermsAggregations
+
+▸ **flatTermsAggregations**<T\>(`response`: ApiResponse, `firstAgg`: *string*, ...`others`: *string*[]): *FluentIterable*<T\>
+
+Runs a top query hits and treat the result in a fancy way where you receive an iterable in steroids of the type you inform
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `response` | ApiResponse | - |
+| `firstAgg` | *string* | - |
+| `...others` | *string*[] | the name of the top aggregation |
+
+**Returns:** *FluentIterable*<T\>
+
+The FluentIterable of T (please inform T when using this function for best experience)
+
+___
+
+### flatTopHitsAggregation
+
+▸ **flatTopHitsAggregation**<T\>(`response`: *FluentIterable*<any\>, `aggName?`: *string*): *FluentIterable*<T\>
+
+Flats a top hits fluent iterable
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Default value | Description |
+| :------ | :------ | :------ | :------ |
+| `response` | *FluentIterable*<any\> | - | A fluent iterable already yielding the upper object of the top hits node (usually returned by flatTermsAggregations) |
+| `aggName` | *string* | 'tops' | - |
+
+**Returns:** *FluentIterable*<T\>
+
+The FluentIterable of T (please inform T when using this function for best experience)
 
 ___
 
@@ -435,7 +488,7 @@ ___
 
 ### runTopHitsQuery
 
-▸ **runTopHitsQuery**<T\>(`client`: Client, `params`: *Search*<any\>, `topHitsAggregationName`: *string*): *Promise*<FluentIterable<T\>\>
+▸ **runTopHitsQuery**<T\>(`client`: Client, `params`: *Search*<any\>, `firstAgg`: *string*, ...`others`: *string*[]): *Promise*<FluentIterable<T\>\>
 
 Runs a top query hits and treat the result in a fancy way where you receive an iterable in steroids of the type you inform
 
@@ -451,7 +504,8 @@ Runs a top query hits and treat the result in a fancy way where you receive an i
 | :------ | :------ | :------ |
 | `client` | Client | Elasticsearch client |
 | `params` | *Search*<any\> | the search to be ran |
-| `topHitsAggregationName` | *string* | the name of the top aggregation |
+| `firstAgg` | *string* | the name of the first aggregation |
+| `...others` | *string*[] | the name of the others aggregation, if there is others |
 
 **Returns:** *Promise*<FluentIterable<T\>\>
 
