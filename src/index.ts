@@ -1,8 +1,9 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable camelcase */
 
 import { identity } from 'is-this-a-pigeon';
 import { fluent, FluentIterable } from '@codibre/fluent-iterable';
-import { Client } from '@elastic/elasticsearch';
+import { ApiResponse, Client } from '@elastic/elasticsearch';
 import { Search } from '@elastic/elasticsearch/api/requestParams';
 
 export type FilterList = (object | undefined)[];
@@ -354,18 +355,58 @@ export function where<Query extends object | undefined>(
  * Runs a top query hits and treat the result in a fancy way where you receive an iterable in steroids of the type you inform
  * @param client Elasticsearch client
  * @param params the search to be ran
- * @param topHitsAggregationName the name of the top aggregation
+ * @param others the name of the top aggregation
+ * @returns The FluentIterable of T (please inform T when using this function for best experience)
+ */
+export function flatTermsAggregations<T>(
+	response: ApiResponse,
+	firstAgg: string,
+	...others: string[]
+): FluentIterable<T> {
+	const aggregations = response.body?.aggregations;
+	if (!aggregations) {
+		return fluent([] as T[]);
+	}
+	let result = fluent(aggregations[firstAgg].buckets as any[]);
+	for (let i = 0; i < others.length; i++) {
+		result = result.filter().flatMap((x: any) => x[others[i]].buckets);
+	}
+	return result;
+}
+
+/**
+ * Flats a top hits fluent iterable
+ * @param response A fluent iterable already yielding the upper object of the top hits node (usually returned by flatTermsAggregations)
+ * @param aggNames the name of the top aggregation
+ * @returns The FluentIterable of T (please inform T when using this function for best experience)
+ */
+export function flatTopHitsAggregation<T>(
+	response: FluentIterable<any>,
+	aggName = 'tops',
+): FluentIterable<T> {
+	return response
+		.filter()
+		.flatMap((x) => x[aggName].hits.hits)
+		.map((x: any) => x._source);
+}
+
+/**
+ * Runs a top query hits and treat the result in a fancy way where you receive an iterable in steroids of the type you inform
+ * @param client Elasticsearch client
+ * @param params the search to be ran
+ * @param firstAgg the name of the first aggregation
+ * @param others the name of the others aggregation, if there is others
  * @returns The FluentIterable of T (please inform T when using this function for best experience)
  */
 export async function runTopHitsQuery<T>(
 	client: Client,
 	// eslint-disable-next-line @typescript-eslint/no-explicit-any
 	params: Search<any>,
-	topHitsAggregationName: string,
+	firstAgg: string,
+	...others: string[]
 ): Promise<FluentIterable<T>> {
 	const response = await client.search(params);
-	return fluent(response.body?.aggregations?.[topHitsAggregationName]?.buckets)
-		.filter()
-		.flatMap((x) => (x as RawTopResult<T>).tops.hits.hits)
-		.map('_source');
+	return flatTopHitsAggregation(
+		flatTermsAggregations(response, firstAgg, ...others),
+	);
 }
