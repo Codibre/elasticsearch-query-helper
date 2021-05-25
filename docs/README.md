@@ -1,11 +1,12 @@
-fluent-iterable - v0.4.0
+fluent-iterable - v0.5.0
 
-# fluent-iterable - v0.4.0
+# fluent-iterable - v0.5.0
 
 ## Table of contents
 
 ### Interfaces
 
+- [MinMaxResult](interfaces/minmaxresult.md)
 - [RawTopResult](interfaces/rawtopresult.md)
 
 ### Type aliases
@@ -29,9 +30,13 @@ fluent-iterable - v0.4.0
 - [lastHit](README.md#lasthit)
 - [lt](README.md#lt)
 - [lte](README.md#lte)
+- [max](README.md#max)
 - [min](README.md#min)
+- [nested](README.md#nested)
 - [or](README.md#or)
 - [orderBy](README.md#orderby)
+- [runGroupingQuery](README.md#rungroupingquery)
+- [runSimplesQuery](README.md#runsimplesquery)
 - [runTopHitsQuery](README.md#runtophitsquery)
 - [select](README.md#select)
 - [topHits](README.md#tophits)
@@ -412,6 +417,31 @@ The lte filter
 
 ___
 
+### max
+
+▸ **max**<T\>(`field`: T, `alias`: *string*): *object*
+
+Returns a max aggregate expression
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `T` | *string* |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `field` | T | the field in question |
+| `alias` | *string* | the name for the aggregation |
+
+**Returns:** *object*
+
+the max aggregation
+
+___
+
 ### min
 
 ▸ **min**<T\>(`field`: T, `alias`: *string*): *object*
@@ -434,6 +464,32 @@ Returns a min aggregate expression
 **Returns:** *object*
 
 the min aggregation
+
+___
+
+### nested
+
+▸ **nested**<Path, TQuery\>(`path`: Path, `query`: TQuery \| *undefined*): *undefined* \| { `path`: Path ; `query`: TQuery  }
+
+Envelops a nested query
+
+#### Type parameters
+
+| Name | Type |
+| :------ | :------ |
+| `Path` | *string* |
+| `TQuery` | Object |
+
+#### Parameters
+
+| Name | Type |
+| :------ | :------ |
+| `path` | Path |
+| `query` | TQuery \| *undefined* |
+
+**Returns:** *undefined* \| { `path`: Path ; `query`: TQuery  }
+
+The enveloped object
 
 ___
 
@@ -483,6 +539,58 @@ Format a ordering object
 **Returns:** { [t in string]: OrderType}[]
 
 the ordering object
+
+___
+
+### runGroupingQuery
+
+▸ **runGroupingQuery**<T\>(`client`: Client, `params`: *Search*<any\>, `firstAgg`: *string*, ...`others`: *string*[]): *Promise*<FluentIterable<T\>\>
+
+Runs a grouping query and treat the result in a fancy way where you receive an iterable in steroids of the type you inform
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `client` | Client | Elasticsearch client |
+| `params` | *Search*<any\> | the search to be ran |
+| `firstAgg` | *string* | the name of the first aggregation |
+| `...others` | *string*[] | the name of the others aggregation, if there is others |
+
+**Returns:** *Promise*<FluentIterable<T\>\>
+
+The FluentIterable of T (please inform T when using this function for best experience)
+
+___
+
+### runSimplesQuery
+
+▸ **runSimplesQuery**<T\>(`client`: Client, `params`: *Search*<any\>): *Promise*<FluentIterable<T\>\>
+
+Runs a no aggregation query and treat the result in a fancy way where you receive an iterable in steroids of the type you inform
+
+#### Type parameters
+
+| Name |
+| :------ |
+| `T` |
+
+#### Parameters
+
+| Name | Type | Description |
+| :------ | :------ | :------ |
+| `client` | Client | Elasticsearch client |
+| `params` | *Search*<any\> | the search to be ran |
+
+**Returns:** *Promise*<FluentIterable<T\>\>
+
+The FluentIterable of T (please inform T when using this function for best experience)
 
 ___
 

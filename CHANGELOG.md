@@ -1,5 +1,8 @@
 
-## 0.4.0
+## 0.5.0
+* 2765322 adding nested query
+## v0.4.0
+* 65f3c03 0.4.0
 * f82e95d bettering response parsers
 ## v0.3.0
 * 7e79a26 0.3.0
