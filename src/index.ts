@@ -20,6 +20,10 @@ export interface RawTopResult<T> {
 	};
 }
 
+export interface MinMaxResult<T> {
+	value: T;
+}
+
 function andOr<T extends FilterList>(items: T, field: 'should' | 'must') {
 	const values = items.filter(identity);
 	switch (values.length) {
@@ -177,6 +181,23 @@ export function select<Fields extends string[]>(includes: Fields | undefined) {
 }
 
 /**
+ * Envelops a nested query
+ * @param includes The fields to be chosen
+ * @returns The enveloped object
+ */
+export function nested<Path extends string, TQuery extends Object>(
+	path: Path,
+	query: TQuery | undefined,
+) {
+	return query
+		? {
+				path,
+				query,
+		  }
+		: undefined;
+}
+
+/**
  * Format a ordering object
  * @param orders the sequence of tuples of field and asc/desc, to defined the ordering
  * @returns the ordering object
@@ -248,6 +269,22 @@ export function min<T extends string>(field: T, alias: string) {
 	return {
 		[alias]: {
 			min: {
+				field,
+			},
+		},
+	};
+}
+
+/**
+ * Returns a max aggregate expression
+ * @param field the field in question
+ * @param alias the name for the aggregation
+ * @returns the max aggregation
+ */
+export function max<T extends string>(field: T, alias: string) {
+	return {
+		[alias]: {
+			max: {
 				field,
 			},
 		},
@@ -391,6 +428,25 @@ export function flatTopHitsAggregation<T>(
 }
 
 /**
+ * Runs a grouping query and treat the result in a fancy way where you receive an iterable in steroids of the type you inform
+ * @param client Elasticsearch client
+ * @param params the search to be ran
+ * @param firstAgg the name of the first aggregation
+ * @param others the name of the others aggregation, if there is others
+ * @returns The FluentIterable of T (please inform T when using this function for best experience)
+ */
+export async function runGroupingQuery<T>(
+	client: Client,
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	params: Search<any>,
+	firstAgg: string,
+	...others: string[]
+): Promise<FluentIterable<T>> {
+	const response = await client.search(params);
+	return flatTermsAggregations(response, firstAgg, ...others);
+}
+
+/**
  * Runs a top query hits and treat the result in a fancy way where you receive an iterable in steroids of the type you inform
  * @param client Elasticsearch client
  * @param params the search to be ran
@@ -409,4 +465,19 @@ export async function runTopHitsQuery<T>(
 	return flatTopHitsAggregation(
 		flatTermsAggregations(response, firstAgg, ...others),
 	);
+}
+
+/**
+ * Runs a no aggregation query and treat the result in a fancy way where you receive an iterable in steroids of the type you inform
+ * @param client Elasticsearch client
+ * @param params the search to be ran
+ * @returns The FluentIterable of T (please inform T when using this function for best experience)
+ */
+export async function runSimplesQuery<T>(
+	client: Client,
+	// eslint-disable-next-line @typescript-eslint/no-explicit-any
+	params: Search<any>,
+): Promise<FluentIterable<T>> {
+	const response = await client.search(params);
+	return fluent(response.body.hits.hits).map((x: any) => x._source);
 }
