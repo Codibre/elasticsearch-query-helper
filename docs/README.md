@@ -1,6 +1,6 @@
-fluent-iterable - v0.5.0
+fluent-iterable - v0.5.1
 
-# fluent-iterable - v0.5.0
+# fluent-iterable - v0.5.1
 
 ## Table of contents
 
@@ -469,7 +469,7 @@ ___
 
 ### nested
 
-▸ **nested**<Path, TQuery\>(`path`: Path, `query`: TQuery \| *undefined*): *undefined* \| { `path`: Path ; `query`: TQuery  }
+▸ **nested**<Path, TQuery\>(`path`: Path, `query`: TQuery \| *undefined*): *undefined* \| { `nested`: { `path`: Path ; `query`: TQuery  }  }
 
 Envelops a nested query
 
@@ -487,7 +487,7 @@ Envelops a nested query
 | `path` | Path |
 | `query` | TQuery \| *undefined* |
 
-**Returns:** *undefined* \| { `path`: Path ; `query`: TQuery  }
+**Returns:** *undefined* \| { `nested`: { `path`: Path ; `query`: TQuery  }  }
 
 The enveloped object
 

@@ -1,5 +1,8 @@
 
-## 0.5.0
+## 0.5.1
+* 993d01c fixing nested
+## v0.5.0
+* e6dfc40 0.5.0
 * 2765322 adding nested query
 ## v0.4.0
 * 65f3c03 0.4.0

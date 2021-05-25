@@ -1,4 +1,4 @@
-[fluent-iterable - v0.5.0](../README.md) / RawTopResult
+[fluent-iterable - v0.5.1](../README.md) / RawTopResult
 
 # Interface: RawTopResult<T\>
 
