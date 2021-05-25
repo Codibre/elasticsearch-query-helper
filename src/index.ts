@@ -191,8 +191,10 @@ export function nested<Path extends string, TQuery extends Object>(
 ) {
 	return query
 		? {
-				path,
-				query,
+				nested: {
+					path,
+					query,
+				},
 		  }
 		: undefined;
 }
